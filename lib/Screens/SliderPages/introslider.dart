@@ -25,73 +25,80 @@ class _IntroSliderState extends State<IntroSlider> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Stack(
-            children: <Widget>[
-              PageView.builder(
-                controller: controller,
-                onPageChanged: (index) {
-                  setState(() {
-                    currentPage = index;
-                  });
-                },
-                itemCount: numberOfPages,
-                itemBuilder: (BuildContext context, int index) {
-                  return EachPage(messages[index], images[index]);
-                },
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Flexible(child: Container()),
-                      Flexible(
-                          child: Indicator(
-                            controller: controller, pageCount: 3  ,
-                          )
-                      ),
-                      Flexible(
-                        child: (currentPage == numberOfPages - 1)
-                            ? GestureDetector(
-                                onTap: () {},
-                                child: Center(
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => const Wrapper())));
-                                      },
-                                      child: const Text(
-                                        "LogIn",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                ),
-                              )
-                            : GestureDetector(
-                                onTap: () {
-                                  controller.jumpToPage(numberOfPages - 1);
-                                },
-                                child: const Center(
-                                  child: Text(
-                                    "Skip",
-                                    style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontWeight: FontWeight.bold,
+      body: Container(
+        decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        colors: [Colors.blue, Colors.white],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+              children: <Widget>[
+                PageView.builder(
+                  controller: controller,
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentPage = index;
+                    });
+                  },
+                  itemCount: numberOfPages,
+                  itemBuilder: (BuildContext context, int index) {
+                    return EachPage(messages[index], images[index]);
+                  },
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Flexible(child: Container()),
+                        Flexible(
+                            child: Indicator(
+                              controller: controller, pageCount: 3  ,
+                            )
+                        ),
+                        Flexible(
+                          child: (currentPage == numberOfPages - 1)
+                              ? GestureDetector(
+                                  onTap: () {},
+                                  child: Center(
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => const Wrapper())));
+                                        },
+                                        child: const Text(
+                                          "LogIn",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () {
+                                    controller.jumpToPage(numberOfPages - 1);
+                                  },
+                                  child: const Center(
+                                    child: Text(
+                                      "Skip",
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

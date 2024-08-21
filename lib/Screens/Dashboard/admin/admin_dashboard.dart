@@ -23,103 +23,110 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 120, 188, 188),
       
       
-      body: Padding(
-
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        colors: [Colors.blue, Colors.white],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),),
+        child: Padding(
+        
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                
-                CircleAvatar(
-                    radius: (30),
-                    backgroundColor: Colors.white,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset("assets/home_page.jpeg"),
-                    )),
-                    
-                const Text(
-                  'Welcome, Admin', // Replace with student's name
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-
-                ),
-                IconButton(
-                  onPressed: () => logOut(context),
-                  icon: const Icon(Icons.logout_outlined,color: Colors.white,size: 30,),),
-                  
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.all(20.0),
-              color: Colors.grey[200],
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    'Student Details:',
+                  
+                  CircleAvatar(
+                      radius: (30),
+                      backgroundColor: Colors.white,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset("assets/home_page.jpeg"),
+                      )),
+                      
+                  const Text(
+                    'Welcome, Admin', // Replace with student's name
                     style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.w500,
                     ),
+        
                   ),
-                  SizedBox(height: 10.0),
-                  Text('Name: Admin'),
-                  Text('Roll Number: 12345'),
-                  Text('Class: 10th'),
-                  // Add more details as needed
+                  IconButton(
+                    onPressed: () => logOut(context),
+                    icon: const Icon(Icons.logout_outlined,color: Colors.white,size: 30,),),
+                    
                 ],
               ),
-            ),
-            Expanded(
-              child: Container(
+              Container(
                 padding: const EdgeInsets.all(20.0),
-                color: Colors.white,
-                child: Column(
+                color: Colors.grey[200],
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Events:',
+                    Text(
+                      'Student Details:',
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 10.0),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          const ListTile(
-                            title: Text('Event 1'),
-                            subtitle: Text('Details of Event 1'),
-                          ),
-                          const ListTile(
-                            title: Text('Event 2'),
-                            subtitle: Text('Details of Event 2'),
-                          ),
-                          // Add more events as needed
-                        ],
-                      ),
-                    ),
+                    SizedBox(height: 10.0),
+                    Text('Name: Admin'),
+                    Text('Roll Number: 12345'),
+                    Text('Class: 10th'),
+                    // Add more details as needed
                   ],
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(20.0),
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Events:',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            const ListTile(
+                              title: Text('Event 1'),
+                              subtitle: Text('Details of Event 1'),
+                            ),
+                            const ListTile(
+                              title: Text('Event 2'),
+                              subtitle: Text('Details of Event 2'),
+                            ),
+                            // Add more events as needed
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

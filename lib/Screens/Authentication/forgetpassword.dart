@@ -60,24 +60,32 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         title: const Text('Forgot Password'),
         centerTitle: true,
       ),
-      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        RoundedInputField(
-          labelText: 'Email',
-          obscureText: false,
-          borderRadius: 40.0,
-          controller: emailcontoller,
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {
-            forgotpass(context,emailcontoller.text.toString());
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.lightBlue, // Change color as needed
+      body: Container(
+        decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        colors: [Colors.blue, Colors.white],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          RoundedInputField(
+            labelText: 'Email',
+            obscureText: false,
+            borderRadius: 40.0,
+            controller: emailcontoller,
           ),
-          child: const Text('Reset Password'),
-        ),
-      ]),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              forgotpass(context,emailcontoller.text.toString());
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.lightBlue, // Change color as needed
+            ),
+            child: const Text('Reset Password'),
+          ),
+        ]),
+      ),
     );
   }
 }

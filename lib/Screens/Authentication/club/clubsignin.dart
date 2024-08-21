@@ -146,133 +146,141 @@ class _ClubSignInPageState extends State<ClubSignInPage> {
               color: Color.fromARGB(255, 97, 96, 96)),
         ),
       )),
-      body: _isLoading
-          ? const Center(
-              child:
-                  CircularProgressIndicator()) // Show CircularProgressIndicator if loading
-          : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Container(
-                    height: 200.0,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: Center(
-                      child: Image.asset(
-                        'assets/home_page.jpeg',
-                        height: 200.0,
-                        width: 200.0,
-                        fit: BoxFit.cover,
+      body: Container(
+        decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        colors: [Colors.blue, Colors.white],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),),
+        child: _isLoading
+            ? const Center(
+                child:
+                    CircularProgressIndicator()) // Show CircularProgressIndicator if loading
+            : SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      height: 200.0,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: Center(
+                        child: Image.asset(
+                          'assets/home_page.jpeg',
+                          height: 200.0,
+                          width: 200.0,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 16.0),
-                        const Text(
-                          'Club Sign In',
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        const SizedBox(height: 16.0),
-                        RoundedInputField(
-                          labelText: 'Email',
-                          obscureText: false,
-                          borderRadius: 40.0,
-                          controller: _emailController,
-                        ),
-                        const SizedBox(height: 19.0),
-                        RoundedInputField(
-                          labelText: 'Password',
-                          obscureText: !_showPassword,
-                          borderRadius: 40.0,
-                          controller: _passwordController,
-                          suffixIcon: IconButton(
-                            icon: Icon(_showPassword
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                _showPassword = !_showPassword;
-                              });
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 5.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ForgotPassword(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: _signInWithEmailAndPassword,
-                          style: ElevatedButton.styleFrom(
-                            elevation: 10,
-                            fixedSize: const Size(180, 50),
-                            backgroundColor: Colors.blue,
-                          ),
-                          child: const Text(
-                            'Sign In',
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 16.0),
+                          const Text(
+                            'Club Sign In',
                             style: TextStyle(
-                                color: Colors.white,
+                                fontSize: 25,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                color: Colors.white),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        TextButton(
-                          onPressed: _navigateToAdminSignup,
-                          // child: const Text('Create New Admin Account'),
-                          child: RichText(
-                            text: const TextSpan(
-                              style: TextStyle(
-                                fontSize: 17.0,
-                                color: Colors.black,
-                              ),
-                              children: [
-                                TextSpan(text: 'Create New Club Account \n'),
-                                TextSpan(
-                                  text: 'Register Now',
+                          const SizedBox(height: 16.0),
+                          RoundedInputField(
+                            labelText: 'Email',
+                            obscureText: false,
+                            borderRadius: 40.0,
+                            controller: _emailController,
+                          ),
+                          const SizedBox(height: 19.0),
+                          RoundedInputField(
+                            labelText: 'Password',
+                            obscureText: !_showPassword,
+                            borderRadius: 40.0,
+                            controller: _passwordController,
+                            suffixIcon: IconButton(
+                              icon: Icon(_showPassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: () {
+                                setState(() {
+                                  _showPassword = !_showPassword;
+                                });
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 5.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ForgotPassword(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Forgot Password?',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 20,
                                   ),
                                 ),
-                              ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            onPressed: _signInWithEmailAndPassword,
+                            style: ElevatedButton.styleFrom(
+                              elevation: 10,
+                              fixedSize: const Size(180, 50),
+                              backgroundColor: Colors.blue,
+                            ),
+                            child: const Text(
+                              'Sign In',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 20),
+                          TextButton(
+                            onPressed: _navigateToAdminSignup,
+                            // child: const Text('Create New Admin Account'),
+                            child: RichText(
+                              text: const TextSpan(
+                                style: TextStyle(
+                                  fontSize: 17.0,
+                                  color: Colors.black,
+                                ),
+                                children: [
+                                  TextSpan(text: 'Create New Club Account \n'),
+                                  TextSpan(
+                                    text: 'Register Now',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 }
