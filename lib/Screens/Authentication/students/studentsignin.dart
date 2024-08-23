@@ -24,7 +24,7 @@ class _StudentSignInPageState extends State<StudentSignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 171, 185, 255),
+     
       appBar: AppBar(
           title: const Center(
         child: Text(
@@ -32,137 +32,131 @@ class _StudentSignInPageState extends State<StudentSignInPage> {
           style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 97, 96, 96)),
+              color: Color.fromARGB(255, 22, 13, 53)),
         ),
       )),
       body: Container(
         decoration: const BoxDecoration(
       gradient: LinearGradient(
-        colors: [Colors.blue, Colors.white],
+        colors: [Color.fromARGB(
+                  255, 24, 96, 252),Color.fromARGB(255, 255, 255, 224), Color.fromARGB(255, 209, 232, 247)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                height: 200.0,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Center(
-                  child: Image.asset(
-                    'assets/home_page.jpeg',
-                    height: 200.0,
-                    width: 200.0,
-                    fit: BoxFit.cover,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+           
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 16.0),
+                  const Text(
+                    'Welcome',
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 16.0),
-                    const Text(
-                      'Student Sign In',
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                  const Text(
+                    'Student Sign In',
+                    style: TextStyle(
+                        fontSize: 20,
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  const SizedBox(height: 16.0),
+                  RoundedInputField(
+                    labelText: 'Email',
+                    obscureText: false,
+                    borderRadius: 40.0,
+                    controller: _emailController,
+                  ),
+                  const SizedBox(height: 16.0),
+                  RoundedInputField(
+                    labelText: 'Password',
+                    obscureText: !_showPassword,
+                    borderRadius: 40.0,
+                    controller: _passwordController,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _showPassword ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _showPassword = !_showPassword;
+                        });
+                      },
                     ),
-                    const SizedBox(height: 16.0),
-                    RoundedInputField(
-                      labelText: 'Email',
-                      obscureText: false,
-                      borderRadius: 40.0,
-                      controller: _emailController,
-                    ),
-                    const SizedBox(height: 16.0),
-                    RoundedInputField(
-                      labelText: 'Password',
-                      obscureText: !_showPassword,
-                      borderRadius: 40.0,
-                      controller: _passwordController,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _showPassword ? Icons.visibility : Icons.visibility_off,
-                        ),
+                  ),
+                  const SizedBox(height: 5.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
                         onPressed: () {
-                          setState(() {
-                            _showPassword = !_showPassword;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 5.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ForgotPassword(),
-                              ),
-                            );
-                          },
-                          child: const Text(
-                            'Forgot Password?',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: _performLogin,
-                      style: ElevatedButton.styleFrom(
-                        elevation: 10,
-                        fixedSize: const Size(180, 50),
-                        backgroundColor: Colors.blue,
-                      ),
-                      child: const Text(
-                        'Sign In',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextButton(
-                      onPressed: _navigateToUserSignIn,
-                      // child: const Text('Create New Admin Account'),
-                      child: RichText(
-                        text: const TextSpan(
-                          style: TextStyle(
-                            fontSize: 17.0,
-                            color: Colors.black,
-                          ),
-                          children: [
-                            TextSpan(text: 'Create New User Account \n'),
-                            TextSpan(
-                              text: 'Register Now',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ForgotPassword(),
                             ),
-                          ],
+                          );
+                        },
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: _performLogin,
+                    style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      fixedSize: const Size(180, 50),
+                      backgroundColor: Colors.blue,
                     ),
-                    const SizedBox(
-                      height: 20,
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  TextButton(
+                    onPressed: _navigateToUserSignIn,
+                    // child: const Text('Create New Admin Account'),
+                    child: RichText(
+                      text: const TextSpan(
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          color: Colors.black,
+                        ),
+                        children: [
+                          TextSpan(text: 'Create New User Account \n'),
+                          TextSpan(
+                            text: 'Register Now',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -176,49 +170,7 @@ class _StudentSignInPageState extends State<StudentSignInPage> {
   }
 
   void _performLogin() async {
-    // try {
-    //   final String email = _emailController.text.trim();
-    //   final String password = _passwordController.text.trim();
-
-    //   final UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-    //     email: email,
-    //     password: password,
-    //   );
-
-    //   final User? user = userCredential.user;
-
-    //   if (user != null) {
-    //     // final DocumentSnapshot userDetailsSnapshot = await FirebaseFirestore.instance
-    //     //     .collection('users')
-    //     //     .doc(user.uid)
-    //     //     .get();
-
-    //     Navigator.pushReplacement(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => const StudentDashboard(),
-    //       ),
-    //     );
-    //   }
-    // } catch (e) {
-    //   if (mounted) {
-    //     showDialog(
-    //       context: context,
-    //       builder: (context) => AlertDialog(
-    //         title: const Text('Authentication Failed'),
-    //         content: Text(e.toString()),
-    //         actions: [
-    //           TextButton(
-    //             onPressed: () {
-    //               Navigator.pop(context);
-    //             },
-    //             child: const Text('OK'),
-    //           ),
-    //         ],
-    //       ),
-    //     );
-    //   }
-    // }
+    
     setState(() {
       _isLoading = true; // Set loading state to true
     });

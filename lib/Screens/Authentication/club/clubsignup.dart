@@ -24,7 +24,6 @@ class _ClubSignupPageState extends State<ClubSignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 171, 185, 255),
       appBar: AppBar(
           title: const Center(
         child: Text(
@@ -38,136 +37,130 @@ class _ClubSignupPageState extends State<ClubSignupPage> {
       body: Container(
         decoration: const BoxDecoration(
       gradient: LinearGradient(
-        colors: [Colors.blue, Colors.white],
+        colors: [Color.fromARGB(
+                  255, 24, 96, 252),Color.fromARGB(255, 255, 255, 224), Color.fromARGB(255, 209, 232, 247)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                height: 200.0,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 16.0),
+                  const Text(
+                  'Welcome',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
                 ),
-                child: Center(
-                  child: Image.asset(
-                    'assets/home_page.jpeg',
-                    height: 200.0,
-                    width: 200.0,
-                    fit: BoxFit.cover,
+                  const Text(
+                    'Club Registration',
+                    style: TextStyle(
+                        fontSize: 20,
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 16.0),
-                    const Text(
-                      'Club Registration',
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    const SizedBox(height: 16.0),
-                    RoundedInputField(
-                      labelText: 'Username',
-                      obscureText: false,
-                      borderRadius: 40.0,
-                      controller: _usernameController,
-                    ),
-                    const SizedBox(height: 16.0),
-                    RoundedInputField(
-                      labelText: 'Email',
-                      obscureText: false,
-                      borderRadius: 40.0,
-                      controller: _userEmailController,
-                    ),
-                    const SizedBox(height: 16.0),
-                    RoundedInputField(
-                      labelText: 'Password',
-                      obscureText: !_showPassword,
-                      borderRadius: 40.0,
-                      controller: _passwordController,
-                      suffixIcon: IconButton(
-                        icon: Icon(_showPassword
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                        onPressed: () {
-                          setState(() {
-                            _showPassword = !_showPassword;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 5.0),
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ForgotPassword(),
-                              ),
-                            );
-                          },
-                          child: const Text('Forgot Password?',style: TextStyle(color:Colors.white,),),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16.0),
-                    ElevatedButton(
-                      onPressed: _performSignUp,
-                      style: ElevatedButton.styleFrom(
-                        elevation: 10,
-                        fixedSize: const Size(180, 50),
-                        backgroundColor: Colors.blue,
-                      ),
-                      child: const Text(
-                        'Sign Up',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextButton(
+                  const SizedBox(height: 16.0),
+                  RoundedInputField(
+                    labelText: 'Username',
+                    obscureText: false,
+                    borderRadius: 40.0,
+                    controller: _usernameController,
+                  ),
+                  const SizedBox(height: 16.0),
+                  RoundedInputField(
+                    labelText: 'Email',
+                    obscureText: false,
+                    borderRadius: 40.0,
+                    controller: _userEmailController,
+                  ),
+                  const SizedBox(height: 16.0),
+                  RoundedInputField(
+                    labelText: 'Password',
+                    obscureText: !_showPassword,
+                    borderRadius: 40.0,
+                    controller: _passwordController,
+                    suffixIcon: IconButton(
+                      icon: Icon(_showPassword
+                          ? Icons.visibility
+                          : Icons.visibility_off),
                       onPressed: () {
-                        Navigator.pushAndRemoveUntil(
+                        setState(() {
+                          _showPassword = !_showPassword;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 5.0),
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (contrxt) => const ClubSignInPage()),
-                            (route) => false);
-                      },
-                      child: RichText(
-                        text: const TextSpan(
-                          style: TextStyle(
-                            fontSize: 17.0,
-                            color: Colors.black,
-                          ),
-                          children: [
-                            TextSpan(text: 'Already have an account? '),
-                            TextSpan(
-                              text: 'Sign In',
-                              style: TextStyle(color: Colors.white,fontSize: 22,),
+                              builder: (context) => const ForgotPassword(),
                             ),
-                          ],
+                          );
+                        },
+                        child: const Text('Forgot Password?',style: TextStyle(color:Colors.white,),),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16.0),
+                  ElevatedButton(
+                    onPressed: _performSignUp,
+                    style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      fixedSize: const Size(180, 50),
+                      backgroundColor: Colors.blue,
+                    ),
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (contrxt) => const ClubSignInPage()),
+                          (route) => false);
+                    },
+                    child: RichText(
+                      text: const TextSpan(
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          color: Colors.black,
                         ),
+                        children: [
+                          TextSpan(text: 'Already have an account? '),
+                          TextSpan(
+                            text: 'Sign In',
+                            style: TextStyle(color: Colors.blueAccent,fontSize: 22,),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

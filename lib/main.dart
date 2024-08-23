@@ -1,8 +1,8 @@
+import 'package:edubridge/Screens/SliderPages/introslider.dart';
+import 'package:edubridge/Wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-
-import 'Wrapper/wrapper.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {

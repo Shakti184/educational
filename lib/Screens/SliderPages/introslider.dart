@@ -1,4 +1,4 @@
-import 'package:edubridge/Wrapper/wrapper.dart';
+import 'package:edubridge/Screens/SliderPages/user_type.dart';
 import 'package:flutter/material.dart';
 
 class IntroSlider extends StatefulWidget {
@@ -11,12 +11,14 @@ class IntroSlider extends StatefulWidget {
 class _IntroSliderState extends State<IntroSlider> {
   PageController controller = PageController(); //controler for the page
 
-  final messages = ["To be a responsible donor, you must get a check-up.", "Your blood type should be compatible with the receiver’s type.", "Donate your blood and save a life."];
+  final messages = ["Connect, collaborate and build a thriving community with our app's community feature .",
+   "Streamline your academic path with mentorship-seamless support for a thriving campus experience.",
+    "Discover, plan and attend events like never before with our event feature. Whether it's concerts, conferences or local gatherings, our app keeps you informed and connected."];
 
   final images = [
-    'assets/images/healthcheck1.png',
-    'assets/images/puzzle1.png',
-    'assets/images/bloodbag1.png',
+    'assets/Class Debat 1.png',
+    'assets/mentor1.png',
+    'assets/College Test Result 1.png',
   ];
 
   int numberOfPages = 3;
@@ -28,13 +30,14 @@ class _IntroSliderState extends State<IntroSlider> {
       body: Container(
         decoration: const BoxDecoration(
       gradient: LinearGradient(
-        colors: [Colors.blue, Colors.white],
+        colors: [Color.fromARGB(
+                  255, 24, 96, 252),Color.fromARGB(255, 255, 255, 224), Color.fromARGB(255, 209, 232, 247)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top:50),
             child: Stack(
               children: <Widget>[
                 PageView.builder(
@@ -69,12 +72,12 @@ class _IntroSliderState extends State<IntroSlider> {
                                   child: Center(
                                     child: ElevatedButton(
                                         onPressed: () {
-                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => const Wrapper())));
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => const UserType())));
                                         },
                                         child: const Text(
-                                          "LogIn",
+                                          "Start",
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                              fontWeight: FontWeight.w600,color: Colors.black),
                                         )),
                                   ),
                                 )
@@ -84,10 +87,10 @@ class _IntroSliderState extends State<IntroSlider> {
                                   },
                                   child: const Center(
                                     child: Text(
-                                      "Skip",
+                                      "Skip -->",
                                       style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
@@ -114,34 +117,26 @@ class EachPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor:Colors.white,
-      
-      body: Center(
-        
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            // Image.asset(
-            //   image,
-            //   fit:BoxFit.cover,
-            //   // fit: BoxFit.fitHeight,
-            //   // width: MediaQuery.of(context).size.width,
-            //   // height: MediaQuery.of(context).size.height,
-            // ),
-            const SizedBox(
-              height: 200,
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(50.0),
-          
-                child: Text(message,style: const TextStyle(color: Colors.black54,fontSize: 20),textAlign: TextAlign.center,)
-              ),
-            ),
-          ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        SizedBox(
+          width: 250,
+          height: 250,
+          child: Image.asset(
+            image,
+            fit:BoxFit.cover,
+          ),
         ),
-      ),
+        
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20.0,80,10,40),
+      
+            child: Text(message,style: const TextStyle(color: Colors.black87,fontSize: 15),textAlign: TextAlign.center,)
+          ),
+        ),
+      ],
     );
   }
 }
@@ -155,7 +150,7 @@ class Indicator extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 40,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -175,9 +170,9 @@ class Indicator extends AnimatedWidget {
   Widget _createIndicator(index) {
     double w = 10;
     double h = 10;
-    Color color = Colors.white;
+    Color color = Colors.black38;
     if (controller.page == index) {
-      color = Colors.blueAccent;
+      color = Colors.blue;
       h = 13;
       w = 13;
     }

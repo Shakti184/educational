@@ -19,20 +19,25 @@ class _StudentDashboardState extends State<StudentDashboard> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          decoration: const BoxDecoration(
+          decoration:  const BoxDecoration(
+            
             gradient: LinearGradient(
-              colors: [Colors.blue, Colors.white],
+              colors: [Color.fromARGB(
+                  255, 24, 96, 252),Color.fromARGB(255, 255, 255, 224), Color.fromARGB(255, 209, 232, 247)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:10.0),
+                child: Container(
                       width:40,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
@@ -45,165 +50,124 @@ class _StudentDashboardState extends State<StudentDashboard> {
                         },
                       ),
                     ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CircleAvatar(
-                        radius: (30),
-                        backgroundColor: Colors.white,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.asset("assets/home_page.jpeg"),
-                        )),
-                    Text(
-                      'Welcome, ${widget.userName}', // Replace with student's name
-                      style: const TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w500,
-                      ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CircleAvatar(
+                      radius: (25),
+                      backgroundColor: Colors.white,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset("assets/home_page.jpeg"),
+                      )),
+                  Text(
+                    'Welcome, ${widget.userName}', // Replace with student's name
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
                     ),
-                    IconButton(
-                      onPressed: () => logOut(context),
-                      icon: const Icon(
-                        Icons.logout_outlined,
-                        color: Colors.white,
-                        size: 30,
-                      ),
+                  ),
+                  IconButton(
+                    onPressed: () => logOut(context),
+                    icon: const Icon(
+                      Icons.logout_outlined,
+                      color: Colors.white,
+                      size: 25,
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Stack(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Card(
-                            color: Colors.white,
-                            child: SizedBox(
-                              width: 150,
-                              height: 180,
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    const Text("Library Id"),
-                                    const Text("2024cs1156"),
-                                    const Text("Mobile Number"),
-                                    const Text("9090898988"),
-                                    ElevatedButton(
-                                        style: const ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStatePropertyAll(
-                                                  Colors.blue),
-                                        ),
-                                        onPressed: () {},
-                                        child: const Text(
-                                          "Profile",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13),
-                                        )),
-                                  ]),
-                            )),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Card(
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Card(
                           color: Colors.white,
                           child: SizedBox(
                             width: 150,
                             height: 180,
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                const Text("Upcoming Event"),
-                                CircleAvatar(
-                                    radius: (30),
-                                    backgroundColor: Colors.white,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child:
-                                          Image.asset("assets/home_page.jpeg"),
-                                    )),
-                                ElevatedButton(
-                                    style: const ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStatePropertyAll(Colors.blue),
-                                    ),
-                                    onPressed: () {},
-                                    child: const Text(
-                                      "Innotech-2023",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 13),
-                                    )),
-                              ],
-                            ),
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  const Text("Library Id"),
+                                  const Text("2024cs1156"),
+                                  const Text("Mobile Number"),
+                                  const Text("9090898988"),
+                                  ElevatedButton(
+                                      style: const ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                Colors.blue),
+                                      ),
+                                      onPressed: () {},
+                                      child: const Text(
+                                        "Profile",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 13),
+                                      )),
+                                ]),
+                          )),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Card(
+                        color: Colors.white,
+                        child: SizedBox(
+                          width: 150,
+                          height: 180,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const Text("Upcoming Event"),
+                              CircleAvatar(
+                                  radius: (30),
+                                  backgroundColor: Colors.white,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child:
+                                        Image.asset("assets/home_page.jpeg"),
+                                  )),
+                              ElevatedButton(
+                                  style: const ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStatePropertyAll(Colors.blue),
+                                  ),
+                                  onPressed: () {},
+                                  child: const Text(
+                                    "Innotech-2023",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 13),
+                                  )),
+                            ],
                           ),
                         ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Stack(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        Card(
-                            color: Colors.white,
-                            child: SizedBox(
-                              width: 90,
-                              height: 130,
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    CircleAvatar(
-                                        radius: (30),
-                                        backgroundColor: Colors.white,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          child: Image.asset(
-                                              "assets/home_page.jpeg"),
-                                        )),
-                                    const Text("Event"),
-                                  ]),
-                            )),
-                        Card(
-                            color: Colors.white,
-                            child: SizedBox(
-                              width: 90,
-                              height: 130,
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    CircleAvatar(
-                                        radius: (30),
-                                        backgroundColor: Colors.white,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          child: Image.asset(
-                                              "assets/home_page.jpeg"),
-                                        )),
-                                    const Text("Club Data"),
-                                  ]),
-                            )),
-                        Card(
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Card(
                           color: Colors.white,
                           child: SizedBox(
                             width: 90,
@@ -212,59 +176,96 @@ class _StudentDashboardState extends State<StudentDashboard> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  CircleAvatar(
-                                      radius: (30),
-                                      backgroundColor: Colors.white,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                            "assets/home_page.jpeg"),
-                                      )),
-                                  const Text("Mentors"),
+                                  ClipRRect(
+                                    child: Image.asset(
+                                        "assets/1.png"),
+                                  ),
+                                  const Text("Event"),
                                 ]),
-                          ),
+                          )),
+                      Card(
+                          color: Colors.white,
+                          child: SizedBox(
+                            width: 90,
+                            height: 130,
+                            child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ClipRRect(
+                                    child: Image.asset(
+                                        "assets/2.png"),
+                                  ),
+                                  const Text("Club Data"),
+                                ]),
+                          )),
+                      Card(
+                        color: Colors.white,
+                        child: SizedBox(
+                          width: 90,
+                          height: 130,
+                          child: Column(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceEvenly,
+                              children: [
+                                CircleAvatar(
+                                    radius: (30),
+                                    backgroundColor: Colors.white,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.asset(
+                                          "assets/31.png"),
+                                    )),
+                                const Text("Mentors"),
+                              ]),
                         ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const Text(
-                  "Latest Hirings",
-                  style: TextStyle(fontSize: 20),
-                ),
-                const Column(
-                  //  crossAxisAlignment: CrossAxisAlignment.start,
-                  //  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10.0),
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          ListTile(
-                            tileColor: Colors.white,
-                            title: Text('Event 1'),
-                            subtitle: Text('Details of Event 1'),
-                          ),
-                          SizedBox(height: 5),
-                          ListTile(
-                            tileColor: Colors.white,
-                            title: Text('Event 2'),
-                            subtitle: Text('Details of Event 2'),
-                          ),
-                          // Add more events as needed
-                        ],
                       ),
-                    )
-                  ],
+                      const SizedBox(
+                        width: 12,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Center(
+                child: Text(
+                  "Latest Hirings",
+                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),
                 ),
-              ],
-            ),
+              ),
+              const Column(
+                //  crossAxisAlignment: CrossAxisAlignment.start,
+                //  mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10.0),
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          tileColor: Colors.white,
+                          title: Text('Event 1'),
+                          subtitle: Text('Details of Event 1'),
+                        ),
+                        SizedBox(height: 5),
+                        ListTile(
+                          tileColor: Colors.white,
+                          title: Text('Event 2'),
+                          subtitle: Text('Details of Event 2'),
+                        ),
+
+                        SizedBox(
+                          height: 80,
+                        ),
+                        // Add more events as needed
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -278,7 +279,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
       builder: (BuildContext context) {
         return AlertDialog(
           elevation: 20,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.blueAccent,
           title: const Text(
             'Are you sure?',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

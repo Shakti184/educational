@@ -28,7 +28,8 @@ class DashboardPage extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
       gradient: LinearGradient(
-        colors: [Colors.blue, Colors.white],
+        colors: [Color.fromARGB(
+                  255, 24, 96, 252),Color.fromARGB(255, 255, 255, 224), Colors.white],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),),
@@ -139,7 +140,7 @@ class DashboardPage extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           elevation: 20,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.blueAccent,
           title: const Text('Are you sure?',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
           content: const SingleChildScrollView(
             child: ListBody(

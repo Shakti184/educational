@@ -1,4 +1,5 @@
 import 'package:edubridge/Screens/Dashboard/students/campus.dart';
+import 'package:edubridge/Screens/Dashboard/students/communities.dart';
 import 'package:edubridge/Screens/Dashboard/students/student_dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -54,47 +55,50 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       
-      body: Container(
-        decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        colors: [Colors.blue, Colors.white],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),),
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CircleAvatar(
-                        radius: (20),
-                        backgroundColor: Colors.white,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.asset("assets/home_page.jpeg"),
-                        )),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color.fromARGB(255, 0, 80, 146),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: const BoxDecoration(
+            
+        gradient: LinearGradient(
+          colors: [Color.fromARGB(
+                    255, 24, 96, 252),Color.fromARGB(255, 255, 255, 224), Color.fromARGB(255, 209, 232, 247)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CircleAvatar(
+                      radius: (20),
+                      backgroundColor: Colors.white,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset("assets/home_page.jpeg"),
+                      )),
+                  const SizedBox(
+                    width: 20,
                   ),
+                ],
+              ),
+              
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration:  BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                gradient: const LinearGradient(
+                  colors: [Color.fromARGB(255, 0, 0, 79), Color.fromARGB(255, 84, 84, 254)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),),
                   child: Stack(
                     children: [
                       Column(
@@ -103,12 +107,30 @@ class _DashboardPageState extends State<DashboardPage> {
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "EDUBRIDGE",
+                             Row(
+                                children: [
+                                  Text(
+                                    "EDU",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 30,
+                                        color: Colors.white),
+                                  ),
+                                  Text(
+                                "BRIDGE", // Your text here
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 30,
-                                    color: Colors.white),
+                                  color: Colors.white, // Text color
+                                  fontSize: 17, // Font size
+                                  decoration: TextDecoration.underline,
+                                  decorationColor:
+                                      Colors.white, // Underline color
+                                  decorationThickness: 0.5,
+                                  // fontWeight: FontWeight.normal, // Font weight
+                                ),
+                                textAlign:
+                                    TextAlign.center, // Center align the text
+                              ),
+                                ],
                               ),
                               IconButton(
                                   onPressed: null,
@@ -149,21 +171,29 @@ class _DashboardPageState extends State<DashboardPage> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  "Categories",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Stack(
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Card(
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "  Categories",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Stack(
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CommunitiesDashBoard(),
+                              ),
+                            ),
+                            child: Card(
                                 color: Colors.white,
                                 child: SizedBox(
                                   width: 110,
@@ -172,549 +202,545 @@ class _DashboardPageState extends State<DashboardPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
+                                        ClipRRect(
+                                          
+                                          child: Image.asset(
+                                              "assets/Saly13.png"),
+                                        ),
                                         const Text("Communities"),
                                       ]),
                                 )),
-                            GestureDetector(
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const CampusDashboard(),
-                                ),
+                          ),
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CampusDashboard(),
                               ),
-                              child: Card(
-                                  color: Colors.white,
-                                  child: SizedBox(
-                                    width: 110,
-                                    height: 140,
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          CircleAvatar(
-                                              radius: (30),
-                                              backgroundColor: Colors.white,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                child: Image.asset(
-                                                    "assets/home_page.jpeg"),
-                                              )),
-                                          const Text("Campus"),
-                                        ]),
-                                  )),
                             ),
-                            Card(
+                            child: Card(
+                                color: Colors.white,
+                                child: SizedBox(
+                                  width: 110,
+                                  height: 140,
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        ClipRRect(
+                                          child: Image.asset(
+                                              "assets/image 23.png"),
+                                        ),
+                                        const Text("Campus"),
+                                      ]),
+                                )),
+                          ),
+                          Card(
+                            color: Colors.white,
+                            child: SizedBox(
+                              width: 110,
+                              height: 140,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ClipRRect(
+                                    child: Image.asset(
+                                        "assets/Saly10.png"),
+                                  ),
+                                  const Text("Mentors"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Card(
                               color: Colors.white,
                               child: SizedBox(
                                 width: 110,
                                 height: 140,
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    CircleAvatar(
-                                        radius: (30),
-                                        backgroundColor: Colors.white,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ClipRRect(
+                                       child: Image.asset(
+                                            "assets/Saly1.png"),
+                                      ),
+                                      const Text("Hiring"),
+                                    ]),
+                              )),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StudentDashboard(userName:_userName),
+                              ),
+                            ),
+                            child: Card(
+                                color: Colors.white,
+                                child: SizedBox(
+                                  width: 110,
+                                  height: 140,
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        ClipRRect(
                                           child: Image.asset(
-                                              "assets/home_page.jpeg"),
-                                        )),
-                                    const Text("Mentors"),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("Hiring"),
+                                              "assets/Dashboard.png"),
+                                        ),
+                                        const Text("Dashboard"),
                                       ]),
                                 )),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            GestureDetector(
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => StudentDashboard(userName:_userName),
-                                ),
-                              ),
-                              child: Card(
-                                  color: Colors.white,
-                                  child: SizedBox(
-                                    width: 110,
-                                    height: 140,
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          CircleAvatar(
-                                              radius: (30),
-                                              backgroundColor: Colors.white,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                child: Image.asset(
-                                                    "assets/home_page.jpeg"),
-                                              )),
-                                          const Text("Dashboard"),
-                                        ]),
-                                  )),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  "Communities",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Stack(
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("KTS"),
-                                        const Text("CS Department"),
-                                      ]),
-                                )),
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("GDSC KIET"),
-                                        const Text("CSE Department"),
-                                      ]),
-                                )),
-                            Card(
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                "  Communities",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Stack(
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Card(
                               color: Colors.white,
                               child: SizedBox(
                                 width: 110,
                                 height: 140,
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    CircleAvatar(
-                                        radius: (30),
-                                        backgroundColor: Colors.white,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
-                                          child: Image.asset(
-                                              "assets/home_page.jpeg"),
-                                        )),
-                                    const Text("DSTL"),
-                                    const Text("CSE Department"),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("NSCC KIET"),
-                                        const Text("CS Department"),
-                                      ]),
-                                )),
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("DevUp"),
-                                        const Text("CSIT Department"),
-                                      ]),
-                                )),
-                            Card(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                "assets/Oval.png"),
+                                          )),
+                                      const Text("KTS"),
+                                      const Text("CS Department",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                    ]),
+                              )),
+                          Card(
                               color: Colors.white,
                               child: SizedBox(
                                 width: 110,
                                 height: 140,
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    CircleAvatar(
-                                        radius: (30),
-                                        backgroundColor: Colors.white,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
-                                          child: Image.asset(
-                                              "assets/home_page.jpeg"),
-                                        )),
-                                    const Text("Innogeeks"),
-                                    const Text("IT Department"),
-                                  ],
-                                ),
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                "assets/Oval (1).png"),
+                                          )),
+                                      const Text("GDSC KIET"),
+                                      const Text("CSE Department",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                    ]),
+                              )),
+                          Card(
+                            color: Colors.white,
+                            child: SizedBox(
+                              width: 110,
+                              height: 140,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CircleAvatar(
+                                      radius: (30),
+                                      backgroundColor: Colors.white,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                            "assets/Oval (2).png"),
+                                      )),
+                                  const Text("DSTL"),
+                                  const Text("CSE Department",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                  const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  "Events",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Stack(
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("GDSE Event"),
-                                        const Text("Delhi-NCR"),
-                                      ]),
-                                )),
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("Innogeeks Hiring"),
-                                        const Text("KIET"),
-                                      ]),
-                                )),
-                            Card(
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Card(
                               color: Colors.white,
                               child: SizedBox(
                                 width: 110,
                                 height: 140,
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    CircleAvatar(
-                                        radius: (30),
-                                        backgroundColor: Colors.white,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
-                                          child: Image.asset(
-                                              "assets/home_page.jpeg"),
-                                        )),
-                                    const Text("KTS Workshop"),
-                                    const Text("CS Department"),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("UI/UX Design"),
-                                        const Text("EEE Department"),
-                                      ]),
-                                )),
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("Azure Workshop"),
-                                        const Text("Ambuvians"),
-                                      ]),
-                                )),
-                            Card(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                "assets/Oval (3).png"),
+                                          )),
+                                      const Text("NSCC KIET"),
+                                      const Text("CS Department",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                    ]),
+                              )),
+                          Card(
                               color: Colors.white,
                               child: SizedBox(
                                 width: 110,
                                 height: 140,
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    CircleAvatar(
-                                        radius: (30),
-                                        backgroundColor: Colors.white,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
-                                          child: Image.asset(
-                                              "assets/home_page.jpeg"),
-                                        )),
-                                    const Text("Poster Making"),
-                                    const Text("KIET"),
-                                  ],
-                                ),
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                "assets/Oval (4).png"),
+                                          )),
+                                      const Text("DevUp"),
+                                      const Text("CSIT Department",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                    ]),
+                              )),
+                          Card(
+                            color: Colors.white,
+                            child: SizedBox(
+                              width: 110,
+                              height: 140,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CircleAvatar(
+                                      radius: (30),
+                                      backgroundColor: Colors.white,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                            "assets/Oval (5).png"),
+                                      )),
+                                  const Text("Innogeeks"),
+                                  const Text("IT Department",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                  const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  "Mentors",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Stack(
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("Kapil Singh"),
-                                        const Text("UI/UX Expert"),
-                                      ]),
-                                )),
-                            Card(
-                                color: Colors.white,
-                                child: SizedBox(
-                                  width: 110,
-                                  height: 140,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: (30),
-                                            backgroundColor: Colors.white,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: Image.asset(
-                                                  "assets/home_page.jpeg"),
-                                            )),
-                                        const Text("Ishu Tyagi"),
-                                        const Text("YouTube Teacher"),
-                                      ]),
-                                )),
-                            Card(
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                "  Events",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Stack(
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Card(
                               color: Colors.white,
                               child: SizedBox(
                                 width: 110,
                                 height: 140,
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    CircleAvatar(
-                                        radius: (30),
-                                        backgroundColor: Colors.white,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
-                                          child: Image.asset(
-                                              "assets/home_page.jpeg"),
-                                        )),
-                                    const Text("Ram"),
-                                    const Text("Web Developer"),
-                                  ],
-                                ),
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                "assets/Oval (1).png"),
+                                          )),
+                                      const Text("GDSE Event"),
+                                      const Text("Delhi-NCR",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                    ]),
+                              )),
+                          Card(
+                              color: Colors.white,
+                              child: SizedBox(
+                                width: 110,
+                                height: 140,
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            
+                                            child: Image.asset(
+                                                "assets/Oval (5).png"),
+                                          )),
+                                      const Text("Innogeeks Hiring"),
+                                      const Text("KIET",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                    ]),
+                              )),
+                          Card(
+                            color: Colors.white,
+                            child: SizedBox(
+                              width: 110,
+                              height: 140,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CircleAvatar(
+                                      radius: (30),
+                                      backgroundColor: Colors.white,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                            "assets/Oval.png"),
+                                      )),
+                                  const Text("KTS Workshop"),
+                                  const Text("CS Department",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                  const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Card(
+                              color: Colors.white,
+                              child: SizedBox(
+                                width: 110,
+                                height: 140,
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                "assets/Oval (6).png"),
+                                          )),
+                                      const Text("UI/UX Design"),
+                                      const Text("EEE Department",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                    ]),
+                              )),
+                          Card(
+                              color: Colors.white,
+                              child: SizedBox(
+                                width: 110,
+                                height: 140,
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                "assets/home_page.jpeg"),
+                                          )),
+                                      const Text("Azure Workshop"),
+                                      const Text("Ambuvians",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                    ]),
+                              )),
+                          Card(
+                            color: Colors.white,
+                            child: SizedBox(
+                              width: 110,
+                              height: 140,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CircleAvatar(
+                                      radius: (30),
+                                      backgroundColor: Colors.white,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                            "assets/Oval (7).png"),
+                                      )),
+                                  const Text("Poster Making"),
+                                  const Text("KIET",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                  const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                "  Mentors",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Stack(
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Card(
+                              color: Colors.white,
+                              child: SizedBox(
+                                width: 110,
+                                height: 140,
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                "assets/Oval (8).png"),
+                                          )),
+                                      const Text("Kapil Singh"),
+                                      const Text("UI/UX Expert",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                    ]),
+                              )),
+                          Card(
+                              color: Colors.white,
+                              child: SizedBox(
+                                width: 110,
+                                height: 140,
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                "assets/Oval (9).png"),
+                                          )),
+                                      const Text("Ishu Tyagi"),
+                                      const Text("YouTube Teacher",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                    ]),
+                              )),
+                          Card(
+                            color: Colors.white,
+                            child: SizedBox(
+                              width: 110,
+                              height: 140,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CircleAvatar(
+                                      radius: (30),
+                                      backgroundColor: Colors.white,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                            "assets/Oval (10).png"),
+                                      )),
+                                  const Text("Ram"),
+                                  const Text("Web Developer",style: TextStyle(color: Colors.red,fontSize: 12),),
+                                  const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                    
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+          
+            ],
           ),
         ),
       ),
