@@ -106,7 +106,6 @@ Future<void> _fetchUserData(BuildContext context) async {
 
                   final data = snapshot.data!.data() as Map<String, dynamic>;
                   
-                  _userName = data['name'];
                   
                   imageUrl = data['imageUrl'] ?? '';
 
