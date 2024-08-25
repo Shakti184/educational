@@ -18,6 +18,7 @@ class _MentorSignUpPageState extends State<MentorSignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _userEmailController = TextEditingController();
   bool _showPassword = false;
+   bool _isLoading = false; 
 
   @override
   Widget build(BuildContext context) {
@@ -32,142 +33,150 @@ class _MentorSignUpPageState extends State<MentorSignUpPage> {
               color: Color.fromARGB(255, 97, 96, 96)),
         ),
       )),
-      body: Container(
-        decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        colors: [Color.fromARGB(
-                  255, 24, 96, 252),Color.fromARGB(255, 255, 255, 224), Color.fromARGB(255, 209, 232, 247)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 16.0),
-                  const Text(
-                    'Welcome',
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
-                  ),
-                  const Text(
-                    'Mentor Registration',
-                    style: TextStyle(
-                        fontSize: 20,
-                        // fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  const SizedBox(height: 16.0),
-                  RoundedInputField(
-                    labelText: 'Username',
-                    obscureText: false,
-                    borderRadius: 40.0,
-                    controller: _usernameController,
-                  ),
-                  const SizedBox(height: 16.0),
-                  RoundedInputField(
-                    labelText: 'Email',
-                    obscureText: false,
-                    borderRadius: 40.0,
-                    controller: _userEmailController,
-                  ),
-                  const SizedBox(height: 16.0),
-                  RoundedInputField(
-                    labelText: 'Password',
-                    obscureText: !_showPassword,
-                    borderRadius: 40.0,
-                    controller: _passwordController,
-                    suffixIcon: IconButton(
-                      icon: Icon(_showPassword
-                          ? Icons.visibility
-                          : Icons.visibility_off),
-                      onPressed: () {
-                        setState(() {
-                          _showPassword = !_showPassword;
-                        });
-                      },
+      body: SingleChildScrollView(
+        child: Container(
+           width: 400,
+          height: 800,
+          decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color.fromARGB(
+                    255, 24, 96, 252),Color.fromARGB(255, 255, 255, 224), Color.fromARGB(255, 209, 232, 247)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 16.0),
+                    const Text(
+                      'Welcome',
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
                     ),
-                  ),
-                  const SizedBox(height: 5.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
+                    const Text(
+                      'Mentor Registration',
+                      style: TextStyle(
+                          fontSize: 20,
+                          // fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    const SizedBox(height: 16.0),
+                    RoundedInputField(
+                      labelText: 'Username',
+                      obscureText: false,
+                      borderRadius: 40.0,
+                      controller: _usernameController,
+                    ),
+                    const SizedBox(height: 16.0),
+                    RoundedInputField(
+                      labelText: 'Email',
+                      obscureText: false,
+                      borderRadius: 40.0,
+                      controller: _userEmailController,
+                    ),
+                    const SizedBox(height: 16.0),
+                    RoundedInputField(
+                      labelText: 'Password',
+                      obscureText: !_showPassword,
+                      borderRadius: 40.0,
+                      controller: _passwordController,
+                      suffixIcon: IconButton(
+                        icon: Icon(_showPassword
+                            ? Icons.visibility
+                            : Icons.visibility_off),
                         onPressed: () {
-                          Navigator.push(
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 5.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ForgotPassword(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'Forgot Password?',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10.0),
+                    if (_isLoading) // Show CircularProgressIndicator if _isLoading is true
+                      const CircularProgressIndicator(),
+                    if (!_isLoading) // Show button only when not loading
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: _performSignUp,
+                          style: ElevatedButton.styleFrom(
+                            elevation: 10,
+                            fixedSize: const Size(180, 50),
+                            backgroundColor: Colors.blue,
+                          ),
+                          child: const Text(
+                            'Sign Up',
+                            style: TextStyle(
+                                color: Colors.white, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ForgotPassword(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: _performSignUp,
-                        style: ElevatedButton.styleFrom(
-                          elevation: 10,
-                          fixedSize: const Size(180, 50),
-                          backgroundColor: Colors.blue,
-                        ),
-                        child: const Text(
-                          'Sign Up',
+                                builder: (contrxt) => const MentorSignInPage()),
+                            (route) => false);
+                      },
+                      child: RichText(
+                        text: const TextSpan(
                           style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (contrxt) => const MentorSignInPage()),
-                          (route) => false);
-                    },
-                    child: RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          color: Colors.black,
-                        ),
-                        children: [
-                          TextSpan(text: 'Already have an account? '),
-                          TextSpan(
-                            text: 'Sign In',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 22,
-                            ),
+                            fontSize: 17.0,
+                            color: Colors.black,
                           ),
-                        ],
+                          children: [
+                            TextSpan(text: 'Already have an account? '),
+                            TextSpan(
+                              text: 'Sign In',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 22,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -183,7 +192,9 @@ class _MentorSignUpPageState extends State<MentorSignUpPage> {
       _showErrorDialog("Enter The Required Fields");
       return;
     }
-
+    setState(() {
+      _isLoading = true; // Show loading indicator
+    });
     try {
       // Check if the email is already in use
       bool emailInUse = await _isEmailInUse(email);
@@ -252,6 +263,10 @@ class _MentorSignUpPageState extends State<MentorSignUpPage> {
     } catch (e) {
       // Show error dialog for any other errors
       _showErrorDialog(e.toString());
+    }finally {
+      setState(() {
+        _isLoading = false; // Hide loading indicator
+      });
     }
   }
 

@@ -33,43 +33,24 @@ class HalfCircleBackground extends StatelessWidget {
             ),
           ),
         ),
-        const Positioned(
-          top: 150, // Adjust the top position as needed
+         Positioned(
+          top: 180, // Adjust the top position as needed
           left: 20, // Adjust the left position as needed
           right: 20, // Adjust the right position as needed
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "EDU", // Your text here
-                    style: TextStyle(
-                      color: Colors.white, // Text color
-                      fontSize: 70, // Font size
-                      fontWeight: FontWeight.bold, // Font weight
-                    ),
-                    textAlign: TextAlign.center, // Center align the text
-                  ),
-                  Text(
-                    "BRIDGE", // Your text here
-                    style: TextStyle(
-                      color: Colors.white, // Text color
-                      fontSize: 35, // Font size
-                      decoration: TextDecoration.underline,
-                      decorationColor: Colors.white, // Underline color
-                      decorationThickness: 0.5,
-                      // fontWeight: FontWeight.normal, // Font weight
-                    ),
-                    textAlign: TextAlign.center, // Center align the text
-                  ),
-                ],
-              ),
-              Text(
+              Container(
+                height: 150,
+                width: 400,
+                child: Image(image: AssetImage('assets/edu.png'))
+                ),
+              const Text(
                 "One  Campus  One  Portal ", // Your text here
                 style: TextStyle(
                   color: Colors.white, // Text color
-                  fontSize: 15, // Font size
+                  fontSize: 18, // Font size
                   fontWeight: FontWeight.bold, // Font weight
                 ),
                 textAlign: TextAlign.center, // Center align the text
@@ -78,7 +59,7 @@ class HalfCircleBackground extends StatelessWidget {
           ),
         ),
         const Positioned(
-          bottom: 100, // Adjust the top position as needed
+          bottom: 150, // Adjust the top position as needed
           left: 20, // Adjust the left position as needed
           right: 20, //
           child: Text(
@@ -92,7 +73,7 @@ class HalfCircleBackground extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: 50, // Adjust the top position as needed
+          bottom: 80, // Adjust the top position as needed
           left: 20, // Adjust the left position as needed
           right: 20, //
           child: GestureDetector(
@@ -106,7 +87,7 @@ class HalfCircleBackground extends StatelessWidget {
               "Get started", // Your text here
               style: TextStyle(
                 color: Colors.black, // Text color
-                fontSize: 15, // Font size
+                fontSize: 20, // Font size
                 fontWeight: FontWeight.bold, // Font weight
               ),
               textAlign: TextAlign.center, // Center align the text

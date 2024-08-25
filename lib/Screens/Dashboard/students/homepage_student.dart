@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:edubridge/Screens/Dashboard/students/campus.dart';
 import 'package:edubridge/Screens/Dashboard/students/communities.dart';
+import 'package:edubridge/Screens/Dashboard/students/hiring/hiring.dart';
 import 'package:edubridge/Screens/Dashboard/students/student_dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +18,12 @@ class StudentHomePage extends StatefulWidget {
 class _StudentHomePageState extends State<StudentHomePage> {
   @override
   Widget build(BuildContext context) {
-    return DashboardPage();
+    return const DashboardPage();
   }
 }
 
 class DashboardPage extends StatefulWidget {
-  DashboardPage({super.key});
+  const DashboardPage({super.key});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -30,121 +32,150 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   final TextEditingController _searchEventController = TextEditingController();
 
-  late String _userName = ''; 
-  late String _libId ='';
-  late String _number='';
-
-
-@override
+  String _userName="";
+  String? imageUrl;
+  String? userId;
+  @override
   void initState() {
-  super.initState();
-  _fetchUserData(context);
-}
-  Future<void> _fetchUserData(BuildContext context) async {
-    User? user = FirebaseAuth.instance.currentUser;
+    super.initState();
+    final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      setState(() {
-        _userName = user.displayName ?? ''; // Assign user's name if available
-        _libId=user.uid;
-        _number=user.phoneNumber??'';
-      });
+      userId = user.uid;
+      _fetchUserData(context);
     }
   }
+
+Future<void> _fetchUserData(BuildContext context) async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('students')
+          .doc(userId)
+          .get();
+      if (doc.exists) {
+        final data = doc.data()!;
+        setState(() {
+          _userName = data['name']??data['username']; // Fetch user's image URL
+        });
+      }
+    } catch (e) {
+      print('Error fetching student details: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
-            
-        gradient: LinearGradient(
-          colors: [Color.fromARGB(
-                    255, 24, 96, 252),Color.fromARGB(255, 255, 255, 224), Color.fromARGB(255, 209, 232, 247)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),),
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 24, 96, 252),
+                Color.fromARGB(255, 255, 255, 224),
+                Color.fromARGB(255, 209, 232, 247)
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const SizedBox(
-                height: 20,
+                height: 40,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CircleAvatar(
-                      radius: (20),
-                      backgroundColor: Colors.white,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset("assets/home_page.jpeg"),
-                      )),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                ],
+              StreamBuilder<DocumentSnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('students')
+                    .doc(userId)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('Error loading data.'));
+                  }
+
+                  if (!snapshot.hasData || !snapshot.data!.exists) {
+                    return const Center(child: Text('No data available.'));
+                  }
+
+                  final data = snapshot.data!.data() as Map<String, dynamic>;
+                  
+                  _userName = data['name'];
+                  
+                  imageUrl = data['imageUrl'] ?? '';
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.white,
+                        backgroundImage: (imageUrl != null && imageUrl!.isNotEmpty)
+                            ? NetworkImage(imageUrl!)
+                            : null,
+                        child: (imageUrl == null || imageUrl!.isEmpty)
+                            ? const Icon(
+                                Icons.account_circle,
+                                size: 50,
+                                color: Colors.black,
+                              )
+                            : null,
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                    ],
+                  );
+                },
               ),
-              
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  decoration:  BoxDecoration(
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                gradient: const LinearGradient(
-                  colors: [Color.fromARGB(255, 0, 0, 79), Color.fromARGB(255, 84, 84, 254)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),),
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 0, 0, 79),
+                        Color.fromARGB(255, 84, 84, 254)
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
                   child: Stack(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Row(
+                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                             Row(
-                                children: [
-                                  Text(
-                                    "EDU",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 30,
-                                        color: Colors.white),
-                                  ),
-                                  Text(
-                                "BRIDGE", // Your text here
-                                style: TextStyle(
-                                  color: Colors.white, // Text color
-                                  fontSize: 17, // Font size
-                                  decoration: TextDecoration.underline,
-                                  decorationColor:
-                                      Colors.white, // Underline color
-                                  decorationThickness: 0.5,
-                                  // fontWeight: FontWeight.normal, // Font weight
-                                ),
-                                textAlign:
-                                    TextAlign.center, // Center align the text
-                              ),
-                                ],
+                              Image(
+                                image: AssetImage('assets/edu.png'),
+                                width: 200,
+                                height: 80,
                               ),
                               IconButton(
                                   onPressed: null,
                                   icon: Icon(
-                                    Icons.notifications,
+                                    Icons.notifications_active_outlined,
+                                    size: 40,
                                     color: Colors.white,
                                   ))
                             ],
                           ),
-                           Text(
-                            "Hello, $_userName!",
+                          Text(
+                            "Hello,$_userName!",
                             style: const TextStyle(
                                 fontWeight: FontWeight.w600,
-                                fontSize: 20,
+                                fontSize: 22,
                                 color: Colors.white),
                           ),
                           const Text(
@@ -152,7 +183,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             style: TextStyle(fontSize: 15, color: Colors.white),
                           ),
                           const SizedBox(
-                            height: 25,
+                            height: 10,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -190,7 +221,8 @@ class _DashboardPageState extends State<DashboardPage> {
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const CommunitiesDashBoard(),
+                                builder: (context) => CommunitiesDashBoard(
+                                    userName: _userName, imageUrl: imageUrl!),
                               ),
                             ),
                             child: Card(
@@ -203,9 +235,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         ClipRRect(
-                                          
-                                          child: Image.asset(
-                                              "assets/Saly13.png"),
+                                          child:
+                                              Image.asset("assets/Saly13.png"),
                                         ),
                                         const Text("Communities"),
                                       ]),
@@ -215,7 +246,8 @@ class _DashboardPageState extends State<DashboardPage> {
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const CampusDashboard(),
+                                builder: (context) => CampusDashboard(
+                                    userName: _userName, imageUrl: imageUrl!),
                               ),
                             ),
                             child: Card(
@@ -245,8 +277,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   ClipRRect(
-                                    child: Image.asset(
-                                        "assets/Saly10.png"),
+                                    child: Image.asset("assets/Saly10.png"),
                                   ),
                                   const Text("Mentors"),
                                 ],
@@ -258,22 +289,31 @@ class _DashboardPageState extends State<DashboardPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Card(
-                              color: Colors.white,
-                              child: SizedBox(
-                                width: 110,
-                                height: 140,
-                                child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      ClipRRect(
-                                       child: Image.asset(
-                                            "assets/Saly1.png"),
-                                      ),
-                                      const Text("Hiring"),
-                                    ]),
-                              )),
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HiringDashboard(
+                                    userName: _userName, imageUrl: imageUrl!),
+                              ),
+                            ),
+                            child: Card(
+                                color: Colors.white,
+                                child: SizedBox(
+                                  width: 110,
+                                  height: 140,
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        ClipRRect(
+                                          child:
+                                              Image.asset("assets/Saly1.png"),
+                                        ),
+                                        const Text("Hiring"),
+                                      ]),
+                                )),
+                          ),
                           const SizedBox(
                             width: 10,
                           ),
@@ -281,7 +321,8 @@ class _DashboardPageState extends State<DashboardPage> {
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => StudentDashboard(userName:_userName),
+                                builder: (context) =>
+                                    StudentDashboard(userName: _userName,imageUrl:imageUrl!),
                               ),
                             ),
                             child: Card(
@@ -339,12 +380,19 @@ class _DashboardPageState extends State<DashboardPage> {
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            child: Image.asset(
-                                                "assets/Oval.png"),
+                                            child:
+                                                Image.asset("assets/Oval.png"),
                                           )),
                                       const Text("KTS"),
-                                      const Text("CS Department",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                      const Text(
+                                        "CS Department",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
                                     ]),
                               )),
                           Card(
@@ -366,8 +414,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 "assets/Oval (1).png"),
                                           )),
                                       const Text("GDSC KIET"),
-                                      const Text("CSE Department",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                      const Text(
+                                        "CSE Department",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
                                     ]),
                               )),
                           Card(
@@ -384,12 +439,19 @@ class _DashboardPageState extends State<DashboardPage> {
                                       backgroundColor: Colors.white,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                            "assets/Oval (2).png"),
+                                        child:
+                                            Image.asset("assets/Oval (2).png"),
                                       )),
                                   const Text("DSTL"),
-                                  const Text("CSE Department",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                  const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                  const Text(
+                                    "CSE Department",
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 12),
+                                  ),
+                                  const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.grey,
+                                  ),
                                 ],
                               ),
                             ),
@@ -421,8 +483,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 "assets/Oval (3).png"),
                                           )),
                                       const Text("NSCC KIET"),
-                                      const Text("CS Department",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                      const Text(
+                                        "CS Department",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
                                     ]),
                               )),
                           Card(
@@ -444,8 +513,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 "assets/Oval (4).png"),
                                           )),
                                       const Text("DevUp"),
-                                      const Text("CSIT Department",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                      const Text(
+                                        "CSIT Department",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
                                     ]),
                               )),
                           Card(
@@ -462,12 +538,19 @@ class _DashboardPageState extends State<DashboardPage> {
                                       backgroundColor: Colors.white,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                            "assets/Oval (5).png"),
+                                        child:
+                                            Image.asset("assets/Oval (5).png"),
                                       )),
                                   const Text("Innogeeks"),
-                                  const Text("IT Department",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                  const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                  const Text(
+                                    "IT Department",
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 12),
+                                  ),
+                                  const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.grey,
+                                  ),
                                 ],
                               ),
                             ),
@@ -511,8 +594,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 "assets/Oval (1).png"),
                                           )),
                                       const Text("GDSE Event"),
-                                      const Text("Delhi-NCR",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                      const Text(
+                                        "Delhi-NCR",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
                                     ]),
                               )),
                           Card(
@@ -528,13 +618,19 @@ class _DashboardPageState extends State<DashboardPage> {
                                           radius: (30),
                                           backgroundColor: Colors.white,
                                           child: ClipRRect(
-                                            
                                             child: Image.asset(
                                                 "assets/Oval (5).png"),
                                           )),
                                       const Text("Innogeeks Hiring"),
-                                      const Text("KIET",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                      const Text(
+                                        "KIET",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
                                     ]),
                               )),
                           Card(
@@ -551,12 +647,18 @@ class _DashboardPageState extends State<DashboardPage> {
                                       backgroundColor: Colors.white,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                            "assets/Oval.png"),
+                                        child: Image.asset("assets/Oval.png"),
                                       )),
                                   const Text("KTS Workshop"),
-                                  const Text("CS Department",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                  const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                  const Text(
+                                    "CS Department",
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 12),
+                                  ),
+                                  const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.grey,
+                                  ),
                                 ],
                               ),
                             ),
@@ -588,8 +690,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 "assets/Oval (6).png"),
                                           )),
                                       const Text("UI/UX Design"),
-                                      const Text("EEE Department",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                      const Text(
+                                        "EEE Department",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
                                     ]),
                               )),
                           Card(
@@ -611,8 +720,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 "assets/home_page.jpeg"),
                                           )),
                                       const Text("Azure Workshop"),
-                                      const Text("Ambuvians",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                      const Text(
+                                        "Ambuvians",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
                                     ]),
                               )),
                           Card(
@@ -629,12 +745,19 @@ class _DashboardPageState extends State<DashboardPage> {
                                       backgroundColor: Colors.white,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                            "assets/Oval (7).png"),
+                                        child:
+                                            Image.asset("assets/Oval (7).png"),
                                       )),
                                   const Text("Poster Making"),
-                                  const Text("KIET",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                  const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                  const Text(
+                                    "KIET",
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 12),
+                                  ),
+                                  const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.grey,
+                                  ),
                                 ],
                               ),
                             ),
@@ -678,8 +801,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 "assets/Oval (8).png"),
                                           )),
                                       const Text("Kapil Singh"),
-                                      const Text("UI/UX Expert",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                      const Text(
+                                        "UI/UX Expert",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
                                     ]),
                               )),
                           Card(
@@ -701,8 +831,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 "assets/Oval (9).png"),
                                           )),
                                       const Text("Ishu Tyagi"),
-                                      const Text("YouTube Teacher",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                      const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                      const Text(
+                                        "YouTube Teacher",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
                                     ]),
                               )),
                           Card(
@@ -719,12 +856,19 @@ class _DashboardPageState extends State<DashboardPage> {
                                       backgroundColor: Colors.white,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                            "assets/Oval (10).png"),
+                                        child:
+                                            Image.asset("assets/Oval (10).png"),
                                       )),
                                   const Text("Ram"),
-                                  const Text("Web Developer",style: TextStyle(color: Colors.red,fontSize: 12),),
-                                  const Icon(Icons.keyboard_arrow_down,color: Colors.grey,),
+                                  const Text(
+                                    "Web Developer",
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 12),
+                                  ),
+                                  const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.grey,
+                                  ),
                                 ],
                               ),
                             ),
@@ -732,14 +876,12 @@ class _DashboardPageState extends State<DashboardPage> {
                         ],
                       ),
                     ],
-                    
                   )
                 ],
               ),
               const SizedBox(
                 height: 40,
               ),
-          
             ],
           ),
         ),

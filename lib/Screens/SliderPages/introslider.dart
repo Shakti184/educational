@@ -117,26 +117,28 @@ class EachPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SizedBox(
-          width: 250,
-          height: 250,
-          child: Image.asset(
-            image,
-            fit:BoxFit.cover,
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          SizedBox(
+            width: 250,
+            height: 250,
+            child: Image.asset(
+              image,
+              fit:BoxFit.cover,
+            ),
           ),
-        ),
+          
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20.0,120,10,40),
         
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0,80,10,40),
-      
-            child: Text(message,style: const TextStyle(color: Colors.black87,fontSize: 15),textAlign: TextAlign.center,)
+              child: Text(message,style: const TextStyle(color: Colors.black87,fontSize: 15),textAlign: TextAlign.center,)
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,10 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import '../../../components/rounded_input_field.dart';
-import 'articles.dart';
 
 class CommunitiesDashBoard extends StatefulWidget {
-  const CommunitiesDashBoard({super.key});
+  final String userName;
+  final String imageUrl;
+  const CommunitiesDashBoard({
+    Key? key,
+    required this.userName,
+    required this.imageUrl,
+  }) : super(key: key);
 
   @override
   State<CommunitiesDashBoard> createState() => _CommunitiesDashBoardState();
@@ -13,12 +19,14 @@ class CommunitiesDashBoard extends StatefulWidget {
 class _CommunitiesDashBoardState extends State<CommunitiesDashBoard> {
   @override
   Widget build(BuildContext context) {
-    return DashboardPage();
+    return DashboardPage(imageUrl: widget.imageUrl);
   }
 }
 
 class DashboardPage extends StatelessWidget {
-  DashboardPage({super.key});
+  final String? imageUrl; // Add this line
+  DashboardPage({super.key, this.imageUrl}); 
+
   final TextEditingController _searchEventController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -67,19 +75,26 @@ class DashboardPage extends StatelessWidget {
                     width: 220,
                   ),
                   CircleAvatar(
-                      radius: (22),
-                      backgroundColor: Colors.white,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset("assets/home_page.jpeg"),
-                      )),
+                    radius: 25,
+                    backgroundColor: Colors.white,
+                    backgroundImage: (imageUrl != null && imageUrl!.isNotEmpty)
+                        ? NetworkImage(imageUrl!)
+                        : null,
+                    child: (imageUrl == null || imageUrl!.isEmpty)
+                        ? const Icon(
+                            Icons.account_circle,
+                            size: 50,
+                            color: Colors.black,
+                          )
+                        : null,
+                  ),
                   const SizedBox(
                     width: 10,
                   ),
                 ],
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -104,42 +119,18 @@ class DashboardPage extends StatelessWidget {
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "EDU",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 30,
-                                        color: Colors.white),
-                                  ),
-                                  Text(
-                                "BRIDGE", // Your text here
-                                style: TextStyle(
-                                  color: Colors.white, // Text color
-                                  fontSize: 17, // Font size
-                                  decoration: TextDecoration.underline,
-                                  decorationColor:
-                                      Colors.white, // Underline color
-                                  decorationThickness: 0.5,
-                                  // fontWeight: FontWeight.normal, // Font weight
-                                ),
-                                textAlign:
-                                    TextAlign.center, // Center align the text
-                              ),
-                                ],
-                              ),
-                              
+                              Image(image: AssetImage('assets/edu.png'),width: 200,height: 80,),
                               IconButton(
                                   onPressed: null,
                                   icon: Icon(
-                                    Icons.notifications,
+                                    Icons.notifications_active_outlined,
+                                    size: 40,
                                     color: Colors.white,
                                   ))
                             ],
                           ),
                           const Text(
-                            "Explore Campus",
+                            "Explore Communities",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20,
@@ -150,7 +141,7 @@ class DashboardPage extends StatelessWidget {
                             style: TextStyle(fontSize: 15, color: Colors.white),
                           ),
                           const SizedBox(
-                            height: 25,
+                            height: 20,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -173,9 +164,18 @@ class DashboardPage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                "  Current Events",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "  Technical Domains",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "Click for more    ",
+                    style: TextStyle(fontSize: 12,),
+                  ),
+                ],
               ),
               Stack(
                 children: [
@@ -184,6 +184,36 @@ class DashboardPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          Card(
+                            color: Colors.white,
+                            child: SizedBox(
+                              width: 110,
+                              height: 140,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CircleAvatar(
+                                      radius: (30),
+                                      backgroundColor: Colors.white,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset("assets/Oval.png"),
+                                      )),
+                                  const Text("KTS"),
+                                  const Text(
+                                    "CS Department",
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 12),
+                                  ),
+                                  const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.grey,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           Card(
                               color: Colors.white,
                               child: SizedBox(
@@ -202,9 +232,9 @@ class DashboardPage extends StatelessWidget {
                                             child: Image.asset(
                                                 "assets/Oval (1).png"),
                                           )),
-                                      const Text("GDSE Event"),
+                                      const Text("GDSE"),
                                       const Text(
-                                        "Delhi-NCR",
+                                        "CSE Department",
                                         style: TextStyle(
                                             color: Colors.red, fontSize: 12),
                                       ),
@@ -214,36 +244,7 @@ class DashboardPage extends StatelessWidget {
                                       ),
                                     ]),
                               )),
-                          Card(
-                              color: Colors.white,
-                              child: SizedBox(
-                                width: 110,
-                                height: 140,
-                                child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      CircleAvatar(
-                                          radius: (30),
-                                          backgroundColor: Colors.white,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child: Image.asset(
-                                                "assets/Oval (5).png"),
-                                          )),
-                                      const Text("Innogeeks Hiring"),
-                                      const Text(
-                                        "KIET",
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12),
-                                      ),
-                                      const Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.grey,
-                                      ),
-                                    ]),
-                              )),
+                          
                           Card(
                             color: Colors.white,
                             child: SizedBox(
@@ -258,11 +259,12 @@ class DashboardPage extends StatelessWidget {
                                       backgroundColor: Colors.white,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset("assets/Oval.png"),
+                                        child:
+                                            Image.asset("assets/Oval (2).png"),
                                       )),
-                                  const Text("KTS Workshop"),
+                                  const Text("DSTL"),
                                   const Text(
-                                    "CS Department",
+                                    "CSE Department",
                                     style: TextStyle(
                                         color: Colors.red, fontSize: 12),
                                   ),
@@ -298,11 +300,11 @@ class DashboardPage extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                             child: Image.asset(
-                                                "assets/Oval (6).png"),
+                                                "assets/Oval (3).png"),
                                           )),
-                                      const Text("UI/UX Design"),
+                                      const Text("NSCC KIET"),
                                       const Text(
-                                        "EEE Department",
+                                        "CS Department",
                                         style: TextStyle(
                                             color: Colors.red, fontSize: 12),
                                       ),
@@ -328,11 +330,11 @@ class DashboardPage extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                             child: Image.asset(
-                                                "assets/home_page.jpeg"),
+                                                "assets/Oval (4).png"),
                                           )),
-                                      const Text("Azure Workshop"),
+                                      const Text("DevUp"),
                                       const Text(
-                                        "Ambuvians",
+                                        "CSIT Department",
                                         style: TextStyle(
                                             color: Colors.red, fontSize: 12),
                                       ),
@@ -342,37 +344,37 @@ class DashboardPage extends StatelessWidget {
                                       ),
                                     ]),
                               )),
+                          
                           Card(
-                            color: Colors.white,
-                            child: SizedBox(
-                              width: 110,
-                              height: 140,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  CircleAvatar(
-                                      radius: (30),
-                                      backgroundColor: Colors.white,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child:
-                                            Image.asset("assets/Oval (7).png"),
-                                      )),
-                                  const Text("Poster Making"),
-                                  const Text(
-                                    "KIET",
-                                    style: TextStyle(
-                                        color: Colors.red, fontSize: 12),
-                                  ),
-                                  const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Colors.grey,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                              color: Colors.white,
+                              child: SizedBox(
+                                width: 110,
+                                height: 140,
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: (30),
+                                          backgroundColor: Colors.white,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.asset(
+                                                "assets/Oval (5).png"),
+                                          )),
+                                      const Text("Innogeeks"),
+                                      const Text(
+                                        "IT Department",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      ),
+                                      const Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey,
+                                      ),
+                                    ]),
+                              )),
                         ],
                       ),
                     ],
@@ -382,9 +384,18 @@ class DashboardPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                "  Hiring for clubs",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "  Cultural",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "Click for more    ",
+                    style: TextStyle(fontSize: 12,),
+                  ),
+                ],
               ),
               Stack(
                 children: [
@@ -592,9 +603,18 @@ class DashboardPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                "  Articles",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+             const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "  Other Clubs",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "Click for more    ",
+                    style: TextStyle(fontSize: 12,),
+                  ),
+                ],
               ),
               Stack(
                 children: [
@@ -604,14 +624,14 @@ class DashboardPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GestureDetector(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ArticlePage(
-                                  s: 'a2',
-                                ),
-                              ),
-                            ),
+                            // onTap: () => Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const ArticlePage(
+                            //       s: 'a2',
+                            //     ),
+                            //   ),
+                            // ),
                             child: Card(
                                 color: Colors.white,
                                 child: SizedBox(
@@ -628,13 +648,13 @@ class DashboardPage extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                               child: Image.asset(
-                                                  "assets/home_page.jpeg"),
+                                                  "assets/Oval (23).png"),
                                             )),
-                                        const Text("Blood Donation"),
+                                        const Text("The JODO KARATE",textAlign: TextAlign.center,),
                                         const Text(
-                                          "Report",
+                                          "Club",
                                           style: TextStyle(
-                                              color: Colors.red, fontSize: 12),
+                                              color: Colors.red, fontSize: 11),
                                         ),
                                         const Icon(
                                           Icons.keyboard_arrow_down,
@@ -644,14 +664,14 @@ class DashboardPage extends StatelessWidget {
                                 )),
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ArticlePage(
-                                  s: 'a1',
-                                ),
-                              ),
-                            ),
+                            // onTap: () => Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const ArticlePage(
+                            //       s: 'a1',
+                            //     ),
+                            //   ),
+                            // ),
                             child: Card(
                                 color: Colors.white,
                                 child: SizedBox(
@@ -668,11 +688,11 @@ class DashboardPage extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                               child: Image.asset(
-                                                  "assets/Oval (21).png"),
+                                                  "assets/Oval (22).png"),
                                             )),
-                                        const Text("CM-Visit"),
+                                        const Text("Finance Club"),
                                         const Text(
-                                          "Article",
+                                          "KOSM",
                                           style: TextStyle(
                                               color: Colors.red, fontSize: 12),
                                         ),
@@ -684,14 +704,14 @@ class DashboardPage extends StatelessWidget {
                                 )),
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ArticlePage(
-                                  s: 'a3',
-                                ),
-                              ),
-                            ),
+                            // onTap: () => Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const ArticlePage(
+                            //       s: 'a3',
+                            //     ),
+                            //   ),
+                            // ),
                             child: Card(
                               color: Colors.white,
                               child: SizedBox(
@@ -708,11 +728,11 @@ class DashboardPage extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(20),
                                           child: Image.asset(
-                                              "assets/Oval (17).png"),
+                                              "assets/Oval (24).png"),
                                         )),
-                                    const Text("Use of Phone"),
+                                    const Text("Case Club"),
                                     const Text(
-                                      "Article",
+                                      "Student",
                                       style: TextStyle(
                                           color: Colors.red, fontSize: 12),
                                     ),
@@ -734,14 +754,14 @@ class DashboardPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GestureDetector(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ArticlePage(
-                                  s: 'a4',
-                                ),
-                              ),
-                            ),
+                            // onTap: () => Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const ArticlePage(
+                            //       s: 'a4',
+                            //     ),
+                            //   ),
+                            // ),
                             child: Card(
                                 color: Colors.white,
                                 child: SizedBox(
@@ -758,11 +778,11 @@ class DashboardPage extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                               child: Image.asset(
-                                                  "assets/Oval (19).png"),
+                                                  "assets/Oval (26).png"),
                                             )),
-                                        const Text("Research Paper"),
+                                        const Text("Uddeshhya"),
                                         const Text(
-                                          "Report",
+                                          "Social Services",
                                           style: TextStyle(
                                               color: Colors.red, fontSize: 12),
                                         ),
@@ -774,14 +794,14 @@ class DashboardPage extends StatelessWidget {
                                 )),
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ArticlePage(
-                                  s: 'a5',
-                                ),
-                              ),
-                            ),
+                            // onTap: () => Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const ArticlePage(
+                            //       s: 'a5',
+                            //     ),
+                            //   ),
+                            // ),
                             child: Card(
                                 color: Colors.white,
                                 child: SizedBox(
@@ -798,11 +818,11 @@ class DashboardPage extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                               child: Image.asset(
-                                                  "assets/Oval (18).png"),
+                                                  "assets/Oval (25).png"),
                                             )),
-                                        const Text("ICAI Conference"),
+                                        const Text("E-Cell"),
                                         const Text(
-                                          "Article",
+                                          "KIET",
                                           style: TextStyle(
                                               color: Colors.red, fontSize: 12),
                                         ),
@@ -814,14 +834,14 @@ class DashboardPage extends StatelessWidget {
                                 )),
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ArticlePage(
-                                  s: 'a6',
-                                ),
-                              ),
-                            ),
+                            // onTap: () => Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const ArticlePage(
+                            //       s: 'a6',
+                            //     ),
+                            //   ),
+                            // ),
                             child: Card(
                               color: Colors.white,
                               child: SizedBox(
@@ -838,9 +858,9 @@ class DashboardPage extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(20),
                                           child: Image.asset(
-                                              "assets/Oval (20).png"),
+                                              "assets/Oval (22).png"),
                                         )),
-                                    const Text("Coming Soon"),
+                                    const Text("Dramatic Club"),
                                     const Text(
                                       "KIET",
                                       style: TextStyle(

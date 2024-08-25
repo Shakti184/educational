@@ -1,11 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 class ArticlePage extends StatefulWidget {
   final String s;
-
-  const ArticlePage({super.key, required this.s});
+  final String imageUrl;
+  const ArticlePage({
+    Key? key,
+    required this.s,
+    required this.imageUrl,
+  }) : super(key: key);
 
   @override
   State<ArticlePage> createState() => _ArticlePageState();
@@ -15,7 +20,7 @@ class _ArticlePageState extends State<ArticlePage> {
   String fetchedText = "Loading...";
   String articleName = "Loading...";
   String type = "Loading...";
-  String? imageUrl;
+  String? imageUrl1;
   bool isLoading = true;
   bool isImageLoading = true;
   String? image;
@@ -33,7 +38,7 @@ class _ArticlePageState extends State<ArticlePage> {
       String url = await ref.getDownloadURL();
 
       setState(() {
-        imageUrl = url;
+        imageUrl1 = url;
         isImageLoading = false;
       });
     } catch (e) {
@@ -62,7 +67,7 @@ class _ArticlePageState extends State<ArticlePage> {
         });
       } else {
         setState(() {
-          image = "No.png";
+          image = "picture.png";
           fetchedText = "No document found";
           articleName = "No document found";
           type = "No document found";
@@ -82,19 +87,21 @@ class _ArticlePageState extends State<ArticlePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 24, 96, 252),
-                Color.fromARGB(255, 255, 255, 224),
-                Colors.white
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+      body: Container(
+        width: 400,
+        height: 1000,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 24, 96, 252),
+              Color.fromARGB(255, 255, 255, 224),
+              Colors.white
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
+        ),
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
@@ -124,13 +131,19 @@ class _ArticlePageState extends State<ArticlePage> {
                           fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                     CircleAvatar(
-                      radius: 22,
-                      backgroundColor: Colors.white,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset("assets/home_page.jpeg"),
-                      ),
-                    ),
+                    radius: 25,
+                    backgroundColor: Colors.white,
+                    backgroundImage: ( widget.imageUrl != null &&  widget.imageUrl!.isNotEmpty)
+                        ? NetworkImage(  widget.imageUrl!)
+                        : null,
+                    child: (  widget.imageUrl == null ||   widget.imageUrl!.isEmpty)
+                        ? const Icon(
+                            Icons.account_circle,
+                            size: 50,
+                            color: Colors.black,
+                          )
+                        : null,
+                  ),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -190,7 +203,7 @@ class _ArticlePageState extends State<ArticlePage> {
                         ),
                         isImageLoading
                             ? const CircularProgressIndicator()
-                            : imageUrl == null
+                            : imageUrl1 == null
                                 ? const Text('Image not found')
                                 : Container(
                                     width:
@@ -204,7 +217,7 @@ class _ArticlePageState extends State<ArticlePage> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(55),
                                       child: Image.network(
-                                        imageUrl!,
+                                        imageUrl1!,
                                         // fit: BoxFit.cover,
                                       ),
                                     ),
