@@ -1,7 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:flutter/material.dart';
 
-import '../../../components/rounded_input_field.dart';
+import '../../../../components/rounded_input_field.dart';
 
 class CommunitiesDashBoard extends StatefulWidget {
   final String userName;
@@ -124,7 +124,7 @@ class DashboardPage extends StatelessWidget {
                                   onPressed: null,
                                   icon: Icon(
                                     Icons.notifications_active_outlined,
-                                    size: 40,
+                                    size: 35,
                                     color: Colors.white,
                                   ))
                             ],

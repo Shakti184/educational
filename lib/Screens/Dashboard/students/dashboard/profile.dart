@@ -93,7 +93,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
 Widget _buildProfileImage() {
   const Widget placeholder = Icon(Icons.account_circle, size: 150);
   return CircleAvatar(
-    radius: 75,
+    radius:  60,
     backgroundColor: Colors.white,
     backgroundImage: _image != null
         ? FileImage(_image!)
@@ -132,7 +132,7 @@ Widget _buildProfileImage() {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     SizedBox(height: 40,),
+                     const SizedBox(height: 40,),
                     Container(
                       alignment: Alignment.topLeft,
                     width: 50,
@@ -157,17 +157,23 @@ Widget _buildProfileImage() {
                         child: Text(_image != null ? 'Update Image' : 'Upload Image'),
                       ),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                          onPressed: _isEditing ? _updateProfile : () {
+                            setState(() {
+                              _isEditing = true;
+                            });
+                          },
+                          child: Text(_isEditing ? 'Save Changes' : 'Edit Profile'),
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 20),
                     ..._buildFormFields(),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _isEditing ? _updateProfile : () {
-                        setState(() {
-                          _isEditing = true;
-                        });
-                      },
-                      child: Text(_isEditing ? 'Save Changes' : 'Edit Profile'),
-                    ),
+                    
                     const SizedBox(height: 100),
                   ],
                 ),

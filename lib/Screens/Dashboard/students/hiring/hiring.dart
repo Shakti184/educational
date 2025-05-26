@@ -123,17 +123,17 @@ class DashboardPage extends StatelessWidget {
                                 onPressed: null,
                                 icon: Icon(
                                   Icons.notifications_active_outlined,
-                                  size: 40,
+                                  size: 35,
                                   color: Colors.white,
                                 ),
                               ),
                             ],
                           ),
                           const Text(
-                            "Get Hired!!",
+                            "Get Hired!",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
-                                fontSize: 20,
+                                fontSize: 22,
                                 color: Colors.white),
                           ),
                           const Text(

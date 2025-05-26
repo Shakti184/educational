@@ -1,14 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edubridge/Screens/Dashboard/students/campus.dart';
-import 'package:edubridge/Screens/Dashboard/students/communities.dart';
+import 'package:edubridge/Screens/Dashboard/students/campus/campus.dart';
+import 'package:edubridge/Screens/Dashboard/students/communities/communities.dart';
 import 'package:edubridge/Screens/Dashboard/students/hiring/hiring.dart';
-import 'package:edubridge/Screens/Dashboard/students/student_dashboard.dart';
+import 'package:edubridge/Screens/Dashboard/students/dashboard/student_dashboard.dart';
+import 'package:edubridge/Screens/Dashboard/students/mentor/mentors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/rounded_input_field.dart';
 
 class StudentHomePage extends StatefulWidget {
+  
   const StudentHomePage({super.key});
 
   @override
@@ -165,7 +167,7 @@ Future<void> _fetchUserData(BuildContext context) async {
                                   onPressed: null,
                                   icon: Icon(
                                     Icons.notifications_active_outlined,
-                                    size: 40,
+                                    size: 35,
                                     color: Colors.white,
                                   ))
                             ],
@@ -266,20 +268,28 @@ Future<void> _fetchUserData(BuildContext context) async {
                                       ]),
                                 )),
                           ),
-                          Card(
-                            color: Colors.white,
-                            child: SizedBox(
-                              width: 110,
-                              height: 140,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  ClipRRect(
-                                    child: Image.asset("assets/Saly10.png"),
-                                  ),
-                                  const Text("Mentors"),
-                                ],
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MentorsDashBoardPage(userName: _userName, imageUrl: imageUrl!),
+                              ),
+                            ),
+                            child: Card(
+                              color: Colors.white,
+                              child: SizedBox(
+                                width: 110,
+                                height: 140,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ClipRRect(
+                                      child: Image.asset("assets/Saly10.png"),
+                                    ),
+                                    const Text("Mentors"),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
